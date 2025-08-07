@@ -13,19 +13,22 @@ HeatMapView is a lightweight and fully SwiftUI-based layout component that visua
 > The layout algorithm is based on Yahoo/YMTreeMap, originally implemented by Yahoo ([Yahoo/YMTreeMap](https://github.com/yahoo/YMTreeMap.git)).
 All credits for the squarified treemap algorithm go to their excellent open-source work.
 
-⸻
+---
 
 ✨ Features
 
-• 📐 Squarified TreeMap layout algorithm
+    • 📐 Squarified TreeMap layout algorithm
 
-• 🔥 Dynamically sizes rectangles based on a heat value
+    • 🔥 Dynamically sizes rectangles based on a heat value
 
-• 🧱 Accepts any Identifiable & Sendable model conforming to HeatMapValue
+    • 🧱 Accepts any Identifiable & Sendable model conforming to HeatMapValue
 
-• 🎨 Customizable content for each heatmap cell
+    • 🎨 Customizable content for each heatmap cell
 
-• 🧪 100% SwiftUI, no dependencies
+    • 🧪 100% SwiftUI, no dependencies
+
+
+---
 
 🚀 Quick Start
 
@@ -75,16 +78,16 @@ HeatMapView(items: stocks) { stock, normalizedHeat in
 
 Swift Package Manager (Recommended)
 
-1. Open your Xcode project
+    1. Open your Xcode project
 
-2. Go to File > Add Packages…
+    2. Go to File > Add Packages…
 
-3. Enter the URL of this repository:
+    3. Enter the URL of this repository:
 
-```bash
-https://github.com/Anderson-Hyl/HeatMap.git
-```
+    ```bash
+    https://github.com/Anderson-Hyl/HeatMap.git
+    ```
 
 🪪 License
 
-MIT © [Anderson-Hyl]
+MIT
