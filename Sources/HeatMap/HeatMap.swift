@@ -19,10 +19,12 @@ public struct HeatMap {
 
     var values: [any HeatMapValue]
     let alignment: FrameAlignment
+    let minAreaRatio: Double
     
-    public init(values: [some HeatMapValue], alignment: FrameAlignment = .retinaSubPixel) {
+    public init(values: [some HeatMapValue], alignment: FrameAlignment = .retinaSubPixel, minAreaRatio: Double = 0) {
         self.values = values
         self.alignment = alignment
+        self.minAreaRatio = min(max(minAreaRatio, 0), 0.25)
     }
     
     private var heatValues: [Double] {
@@ -34,7 +36,12 @@ public struct HeatMap {
     }
 
     private var normalizedWeights: [Double] {
-        heatValues.map { $0 / totalHeatValue }
+        guard totalHeatValue > 0 else { return Array(repeating: 1.0 / Double(max(values.count, 1)), count: values.count) }
+        // Soft floor each weight to guarantee a minimum tile area
+        let floorValue = minAreaRatio * totalHeatValue
+        let floored = heatValues.map { max($0, floorValue) }
+        let sum = floored.reduce(0, +)
+        return floored.map { $0 / sum }
     }
 
     func computeRects<ID: Hashable>(in frame: CGRect) -> [HeatMapRect<ID>] {
@@ -150,23 +157,26 @@ public struct HeatMapView<Item: HeatMapValue, Content: View>: View {
     let items: [Item]
     let spacing: CGFloat
     let alignment: HeatMap.FrameAlignment
+    let minAreaRatio: Double
     let content: (Item, Double) -> Content
 
     public init(
         items: [Item],
         spacing: CGFloat = 1.5,
         alignment: HeatMap.FrameAlignment = .retinaSubPixel,
+        minAreaRatio: Double = 0,
         @ViewBuilder content: @escaping (Item, Double) -> Content
     ) {
         self.items = items
         self.spacing = spacing
         self.alignment = alignment
+        self.minAreaRatio = minAreaRatio
         self.content = content
     }
 
     public var body: some View {
         GeometryReader { geo in
-            let heatmap = HeatMap(values: items, alignment: alignment)
+            let heatmap = HeatMap(values: items, alignment: alignment, minAreaRatio: minAreaRatio)
             let rects = heatmap.computeRects(in: geo.frame(in: .local)) as [HeatMapRect<Item.ID>]
             let maxHeat = items.map(\.heat).max() ?? 1.0
             ZStack {
