@@ -9,7 +9,7 @@ https://github.com/user-attachments/assets/731bcee1-6ed4-4404-8dd0-60ebb0779a29
 
 HeatMapView is a lightweight and fully SwiftUI-based layout component that visualizes a collection of data items as a heatmap using a squarified treemap layout. It’s ideal for displaying weighted distributions such as market caps, user activity, or statistical heat values.
 
-> ❗️**Important:**  
+> [!Important]
 > The layout algorithm is based on Yahoo/YMTreeMap, originally implemented by Yahoo ([Yahoo/YMTreeMap](https://github.com/yahoo/YMTreeMap.git)).
 All credits for the squarified treemap algorithm go to their excellent open-source work.
 
